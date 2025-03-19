@@ -1,0 +1,7 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Only include the addons for this addon
+addons/*
+!addons/node_disabler/

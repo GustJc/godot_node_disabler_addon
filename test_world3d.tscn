@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cn7f215o2r10t"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Node3D" type="Node3D" parent="."]
+metadata/_edit_group_ = true

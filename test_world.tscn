@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://cy1fyslhko3f6"]
+
+[ext_resource type="Texture2D" uid="uid://btj5smowfx3qn" path="res://icon.svg" id="1_dxppu"]
+
+[node name="TestWorld" type="Node2D"]
+metadata/_edit_lock_ = true
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(554, 243)
+texture = ExtResource("1_dxppu")
+
+[node name="Icon2" type="Sprite2D" parent="Icon"]
+process_mode = 4
+modulate = Color(0.1875, 1, 0.257324, 1)
+position = Vector2(256, 41)
+texture = ExtResource("1_dxppu")
+
+[node name="Icon2" type="Sprite2D" parent="."]
+modulate = Color(1, 0.0585938, 0.0585938, 1)
+position = Vector2(320, 348)
+texture = ExtResource("1_dxppu")
+
+[node name="Node" type="Node" parent="."]
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
