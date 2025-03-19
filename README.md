@@ -8,7 +8,14 @@ Shortcuts:
 
 A node is considered disabled when their _proccess_mode_ is DISABLED and they are invisible.
 
-### **Shows icon disabled nodes**
+
+
+https://github.com/user-attachments/assets/9e92f2eb-6e57-4ed8-adeb-2abc47d080b4
+
+
+
+
+### **Shows icons for disabled nodes**
 <div align="center">
 
 ![Icons](readme_assets/disable_nodes.png)
