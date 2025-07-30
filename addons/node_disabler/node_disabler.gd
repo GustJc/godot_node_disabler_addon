@@ -23,8 +23,8 @@ const USE_MULTI_SELECT = true
 var ref_button : Array[Button]
 var container_button : Button
 var container_button_3d : Button
-var canvas_toolbar_path = "/root/@EditorNode@21298/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11479/@MarginContainer@11127/@HFlowContainer@11128/@HBoxContainer@11129"
-var node3d_toolbar_path = "/root/@EditorNode@21298/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@Node3DEditor@12336/@MarginContainer@11481/@HFlowContainer@11482/@HBoxContainer@11483"
+var canvas_toolbar_path = "@EditorNode@21301/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11482/@MarginContainer@11130/@HFlowContainer@11131/@HBoxContainer@11132"
+var node3d_toolbar_path = "@EditorNode@21301/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@Node3DEditor@12339/@MarginContainer@11484/@HFlowContainer@11485/@HBoxContainer@11486"
 
 
 # Path the user will have to do on Project -> Project Settings -> ...
@@ -37,10 +37,13 @@ func _enter_tree() -> void:
 	_add_plugin_button() # and intercept menu lock_group buttons to refresh
 
 	# Find ref to Tree used by Godot. If not found, will search for it.
-	var absolute_tree_path_try := get_tree().root.get_node(^"/root/@EditorNode@21298/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockVSplitLeftR/DockSlotLeftUR/Scene/@SceneTreeEditor@5131/@Tree@5102")
+	var absolute_tree_path_try = null#get_tree().root.get_node_or_null(^"/root/@EditorNode@21301/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockVSplitLeftR/DockSlotLeftUR/Scene/@SceneTreeEditor@5131/@Tree@5102")
 	if not absolute_tree_path_try:
-		print("Did not find it. So scanning...")
-		var editor_split_zones := get_tree().root.get_node(^"/root/@EditorNode@21298/@Panel@14/@VBoxContainer@15")
+		#print("Did not find it. So scanning...")
+		#var editor_split_zones := get_tree().root.get_node(^"/root/@EditorNode@21301/@Panel@14/@VBoxContainer@15")
+		var editor_split_zones := get_tree().root.find_child("@EditorNode*", false, false)\
+						.find_child("@Panel*", false, false)\
+						.find_child("@VBoxContainer*", false, false)
 		scene_tree = _find_scene_tree(editor_split_zones)
 	else:
 		scene_tree = absolute_tree_path_try
@@ -68,9 +71,20 @@ func _exit_tree() -> void:
 	ProjectSettings.save()
 
 
+func _get_true_node(abs_path: String) -> Node:
+	var splits = abs_path.split("/")
+	var node = get_tree().root
+	for path in splits:
+		if path[0] == '@': ## Has id
+			path = "@" + path.split("@")[1]
+		node = node.find_child(path+"*", false, false)
+
+	return node
+
 func _add_plugin_button():
 	## Signals for 2d
-	var menubar = get_node(canvas_toolbar_path)
+	#var menubar = get_node(canvas_toolbar_path)
+	var menubar = _get_true_node(canvas_toolbar_path)
 	var size = menubar.get_child_count()
 	var i = size-1
 	var i_button := 0
@@ -87,7 +101,8 @@ func _add_plugin_button():
 		i -= 1
 
 	## Signals for 3d
-	var menubar_3d := get_node(node3d_toolbar_path)
+	#var menubar_3d := get_node(node3d_toolbar_path)
+	var menubar_3d := _get_true_node(node3d_toolbar_path)
 	size = menubar_3d.get_child_count()
 	var ii = size-1
 	i_button = 0
