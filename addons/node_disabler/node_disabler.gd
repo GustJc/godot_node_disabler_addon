@@ -54,7 +54,8 @@ func _enter_tree() -> void:
 	scene_tree.item_mouse_selected.connect(_selected_item_mouse)
 
 	# Shortcuts
-	shortcut = set_shortcut(PLUGIN_PATH, TOGGLE_DISABLE_SHORTCUT)
+	#shortcut = set_shortcut(PLUGIN_PATH, TOGGLE_DISABLE_SHORTCUT)
+	shortcut = TOGGLE_DISABLE_SHORTCUT
 
 
 func _exit_tree() -> void:
